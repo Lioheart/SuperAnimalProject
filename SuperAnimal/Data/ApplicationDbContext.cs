@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SuperAnimal.Models;
 
 namespace SuperAnimal.Data
 {
@@ -12,5 +13,10 @@ namespace SuperAnimal.Data
             : base(options)
         {
         }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostPhoto> PostPhotos { get; set; }
     }
 }
