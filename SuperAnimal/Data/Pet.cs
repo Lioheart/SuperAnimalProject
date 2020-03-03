@@ -29,16 +29,18 @@ namespace SuperAnimal.Models
     public class MotherPet
     {
         [Key]
-        public int PetId { get; set; }
+        public int Id { get; set; }
         [ForeignKey("PetId")]
         public Pet Pet { get; set; }
+        public int PetId { get; set; }
     }
 
     public class FatherPet
     {
         [Key]
-        public int PetId { get; set; }
-        [ForeignKey("UserId")]
+        public int Id { get; set; }
+        [ForeignKey("PetId")]
         public Pet Pet { get; set; }
+        public int PetId { get; set; }
     }
 }
