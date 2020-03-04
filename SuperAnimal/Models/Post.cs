@@ -10,12 +10,17 @@ namespace SuperAnimal.Models
     public class Post
     {
         [Key]
-        public int PostId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public int Id { get; set; }
+
+        public AppUser User { get; set; }
+
         public string UserId { get; set; }
+
         public string Body { get; set; }
-        public DateTime Timestamp { get; set; }
+
+        public IEnumerable<Pet> Pets { get; set; }
+
+        public DateTime? Timestamp { get; set; }
 
 
     }

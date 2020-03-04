@@ -10,11 +10,11 @@ namespace SuperAnimal.Models
     public class PostPhoto
     {
         [Key]
-        public int PostPhotoId { get; set; }
+        public int Id { get; set; }
+
         public string Image { get; set; }
 
-        [ForeignKey("PostId")]
         public Post Post { get; set; }
-        public int PostId { get; set; }
+
     }
 }
