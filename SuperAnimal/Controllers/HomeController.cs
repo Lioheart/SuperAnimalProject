@@ -55,7 +55,7 @@ namespace SuperAnimal.Controllers
 
            // var xd = Context.AppUsers.Where(x => x.Id > 0).Include(x => x.Pets).ToList();
 
-            //return View(new ErrorViewModel());
+            return View(new ErrorViewModel());
         }
     }
 }
