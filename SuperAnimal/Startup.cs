@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperAnimal.Models;
+using SuperAnimal.Services;
 
 namespace SuperAnimal
 {
@@ -47,6 +48,9 @@ namespace SuperAnimal
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<AccountService>();
+            services.AddScoped<EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
