@@ -44,19 +44,14 @@ namespace SuperAnimal.Services
 
         public void SendWelcomeMail(AppUser user)
         {
-
-            Client.Send(SenderEmailAddress, user.Email, GetWelcomeMessageTitle(user), GetWelComeMessageBody(user));
-
+            Client.Send(SenderEmailAddress, SenderEmailAddress, GetWelcomeMessageTitle(user), GetWelComeMessageBody(user));
         }
 
-        public string GetWelcomeMessageTitle(AppUser user)
-        {
-            return string.Format("Hello {0}, welcome to SuperAnimalProject", user.Email);
-        }
-
-        public string GetWelComeMessageBody(AppUser user)
-        {
-            return string.Format("{0}, thank you for register in SuperAnimal", user.Email);
-        }
+        public string GetWelcomeMessageTitle(AppUser user) =>
+            string.Format("Hello {0}, welcome to SuperAnimalProject", user.UserName);
+        
+        public string GetWelComeMessageBody(AppUser user) =>
+            string.Format("{0}, thank you for register in SuperAnimal", user.UserName);
+   
     }
 }

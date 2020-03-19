@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SuperAnimal.Data;
+using SuperAnimal.Models;
 
 namespace SuperAnimal
 {
@@ -13,7 +18,7 @@ namespace SuperAnimal
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().SeedData().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +27,24 @@ namespace SuperAnimal
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+    }
+
+    public static class WebHostExtensions
+    {
+        public static IHost SeedData(this IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetService<ApplicationDbContext>();
+                var userManager = services.GetService<UserManager<AppUser>>();
+
+                context.Database.Migrate();
+                var seeder = new DataInitialization(context, userManager);
+                seeder.SeedUsers();
+                seeder.SeedPets();
+            }
+            return host;
+        }
     }
 }

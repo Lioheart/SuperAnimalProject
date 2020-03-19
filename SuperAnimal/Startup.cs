@@ -51,6 +51,8 @@ namespace SuperAnimal
 
             services.AddScoped<AccountService>();
             services.AddScoped<EmailService>();
+            services.AddScoped<PetService>();
+            services.AddScoped<ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

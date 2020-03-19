@@ -32,7 +32,7 @@ namespace SuperAnimal.Services
         public async Task<IdentityResult> RegisterNewUser(RegisterViewModel model)
         {
 
-            var user = new AppUser { UserName = model.Email, Email = model.Email };
+            var user = new AppUser { UserName = model.UserName, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
@@ -49,13 +49,29 @@ namespace SuperAnimal.Services
 
         public async Task<SignInResult> Login(LoginViewModel model)
         {
-            return await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var user = Context.AspNetUsers.FirstOrDefault(x => x.UserName == model.Email || x.Email == model.Email);
+            var checkResult = await SignInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+            if (checkResult.Succeeded)
+            {
+                await SignInManager.SignInAsync(user, false);
+                return checkResult;
+            }
+
+            return checkResult;
         }
 
         public async void Logout()
         {
             await SignInManager.SignOutAsync();
             Logger.LogInformation("User logged out.");
+        }
+
+        public void Seed()
+        {
+            var xd = new DataInitialization(Context,UserManager);
+            xd.SeedUsers();
+            xd.SeedPets();
         }
 
 

@@ -108,6 +108,13 @@ namespace SuperAnimal.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public IActionResult Seed()
+        {
+            AccountService.Seed();
+            return View();
+        }
+
 
         #region Helpers
 

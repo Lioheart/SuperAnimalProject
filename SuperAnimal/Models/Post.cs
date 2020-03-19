@@ -18,8 +18,6 @@ namespace SuperAnimal.Models
 
         public string Body { get; set; }
 
-        public IEnumerable<Pet> Pets { get; set; }
-
         public DateTime? Timestamp { get; set; }
 
 

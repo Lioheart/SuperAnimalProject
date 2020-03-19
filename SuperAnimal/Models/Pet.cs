@@ -9,7 +9,6 @@ namespace SuperAnimal.Models
 {
     public class Pet
     {
-        [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -17,6 +16,8 @@ namespace SuperAnimal.Models
         public string Genre { get; set; }
 
         public string Breed { get; set; }
+
+        public string ProfilePhoto { get; set; }
 
         public DateTime? BirthDate { get; set; }
 

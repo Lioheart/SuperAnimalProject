@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperAnimal.Models
 {
-    public class AppRole : IdentityRole<int>
+    public class AppRole : IdentityRole
     {
     }
 }

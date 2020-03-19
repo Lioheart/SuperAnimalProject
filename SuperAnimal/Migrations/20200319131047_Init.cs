@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SuperAnimal.Migrations
 {
-    public partial class initdb : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,7 @@ namespace SuperAnimal.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,9 +25,8 @@ namespace SuperAnimal.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
@@ -74,7 +72,7 @@ namespace SuperAnimal.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -95,7 +93,7 @@ namespace SuperAnimal.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -117,7 +115,7 @@ namespace SuperAnimal.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,8 +132,8 @@ namespace SuperAnimal.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -158,7 +156,7 @@ namespace SuperAnimal.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -180,7 +178,6 @@ namespace SuperAnimal.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
                     Timestamp = table.Column<DateTime>(nullable: true)
@@ -189,8 +186,8 @@ namespace SuperAnimal.Migrations
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -205,15 +202,14 @@ namespace SuperAnimal.Migrations
                     Name = table.Column<string>(nullable: true),
                     Genre = table.Column<string>(nullable: true),
                     Breed = table.Column<string>(nullable: true),
+                    ProfilePhoto = table.Column<string>(nullable: true),
                     BirthDate = table.Column<DateTime>(nullable: true),
                     DeathDate = table.Column<DateTime>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     SexId = table.Column<int>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     MotherId = table.Column<int>(nullable: true),
-                    FatherId = table.Column<int>(nullable: true),
-                    PostId = table.Column<int>(nullable: true)
+                    FatherId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,20 +227,14 @@ namespace SuperAnimal.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pets_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Pets_Sexs_SexId",
                         column: x => x.SexId,
                         principalTable: "Sexs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pets_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Pets_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -345,19 +335,14 @@ namespace SuperAnimal.Migrations
                 column: "MotherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_PostId",
-                table: "Pets",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pets_SexId",
                 table: "Pets",
                 column: "SexId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_UserId1",
+                name: "IX_Pets_UserId",
                 table: "Pets",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostPhotos_PostId",
@@ -365,9 +350,9 @@ namespace SuperAnimal.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_UserId1",
+                name: "IX_Posts_UserId",
                 table: "Posts",
-                column: "UserId1");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

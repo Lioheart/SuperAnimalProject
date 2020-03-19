@@ -1,43 +1,31 @@
-﻿@{
+﻿@model SuperAnimal.ViewModels.Profile.ProfileIndexViewModel
+@{
     ViewData["Title"] = "Index";
 }
 
-    <div class="row mb-5">
-        <h1>My pets</h1>
-        @Html.ActionLink("Add Pet +", "AddPet", "Pet",null, new { @class="text-decoration-none btn btn-success ml-3" })
-        @*<input type="button" class="btn btn-success ml-3" value="Add Pet +">*@
-        
+<div class="row mb-5">
+    <h1>My pets</h1>
+    @Html.ActionLink("Add Pet +", "AddPet", "Pet", null, new { @class = "text-decoration-none btn btn-success ml-3 add-pet-btn" })
+</div>
 
-
-        @*<a asp-controller="Pet" asp-action="AddPet" class="btn btn-success text-center ml-3" >Add Pet +</a>*@
-    </div>
-<div class="row">
-    <div class="col-4">
-        <a asp-controller="Pet" asp-action="Index" asp-route-id="10" class="text-decoration-none">
-            <div class="card">
-                <img class="card-img-top" src="~/img/cat1.jfif" alt="Card image cap">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+<div class="container">
+    <div class="row">
+        @foreach (var pet in Model.Pets)
+        {
+            <div class="col-3 mt-4">
+                <a asp-controller="Pet" asp-action="Index" asp-route-id="@pet.Id" class="text-decoration-none">
+                    <div class="card">
+                        <img class="card-img-top" src="@pet.ProfilePhoto" alt="@pet.Name">
+                        <h5 class="card-title">@pet.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@pet.Genre</h6>
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
+        }
 
-
-    <div class="col-4">
-        <div class="card">
-            <img class="card-img-top" src="~/img/cat1.jfif" alt="Card image cap">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        </div>
-    </div>
-
-    <div class="col-4">
-        <div class="card">
-            <img class="card-img-top" src="~/img/cat1.jfif" alt="Card image cap">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        </div>
     </div>
 </div>
+
+
 
 
