@@ -11,21 +11,17 @@ using System.Threading.Tasks;
 
 namespace SuperAnimal.Services
 {
-    public class AccountService
+    public class AccountService : BaseService
     {
-        private readonly ApplicationDbContext Context;
         private readonly UserManager<AppUser> UserManager;
         private readonly SignInManager<AppUser> SignInManager;
-        private readonly ILogger Logger;
         private readonly EmailService EmailService;
 
         public AccountService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            ILogger<AccountService> logger, ApplicationDbContext context, EmailService emailService)
+            ILogger<AccountService> logger, ApplicationDbContext context, EmailService emailService) : base(logger, context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            Logger = logger;
-            Context = context;
             EmailService = emailService;
         }
 
@@ -49,7 +45,7 @@ namespace SuperAnimal.Services
 
         public async Task<SignInResult> Login(LoginViewModel model)
         {
-            var user = Context.AspNetUsers.FirstOrDefault(x => x.UserName == model.Email || x.Email == model.Email);
+            var user = Context.AspNetUsers.FirstOrDefault(x => x.UserName == model.EmailOrUserName || x.Email == model.EmailOrUserName);
             var checkResult = await SignInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (checkResult.Succeeded)

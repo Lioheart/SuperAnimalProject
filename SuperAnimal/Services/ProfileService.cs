@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using SuperAnimal.Data;
 using SuperAnimal.Models;
 using SuperAnimal.Services.ServiceResponses;
@@ -11,14 +12,13 @@ using System.Threading.Tasks;
 
 namespace SuperAnimal.Services
 {
-    public class ProfileService
+    public class ProfileService : BaseService
     {
-        private readonly ApplicationDbContext Context;
         private readonly UserManager<AppUser> UserManager;
 
-        public ProfileService(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public ProfileService(ApplicationDbContext context, UserManager<AppUser> userManager, ILogger<ProfileService> logger)
+            : base(logger, context)
         {
-            Context = context;
             UserManager = userManager;
         }
 

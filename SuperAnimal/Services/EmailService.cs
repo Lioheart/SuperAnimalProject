@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using SuperAnimal.Data;
 using SuperAnimal.Models;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SuperAnimal.Services
 {
-    public class EmailService
+    public class EmailService : BaseService
     {
         private readonly SmtpClient Client;
 
@@ -31,7 +33,7 @@ namespace SuperAnimal.Services
             }
         }
 
-        public EmailService(IConfiguration configuration)
+        public EmailService(IConfiguration configuration, ILogger<EmailService> logger, ApplicationDbContext context) : base(logger, context)
         {
             Configuration = configuration;
 

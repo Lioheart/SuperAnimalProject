@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SuperAnimal.Services;
+using SuperAnimal.ViewModels.Pet;
 
 namespace SuperAnimal.Controllers
 {
@@ -23,7 +24,21 @@ namespace SuperAnimal.Controllers
 
         // GET: /Pet/AddPet
         [HttpGet]
-        public IActionResult AddPet() => View();
-        
+        public IActionResult AddPet(string userId) => View(new AddPetViewModel { UserId = userId });
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddPet(AddPetViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = PetService.CreateNewPet(model);
+                return RedirectToAction(nameof(PetController.Index), "Pet", new { id = result.Data.Id });
+            }
+            return View(model);
+        }
+
+
+
     }
 }

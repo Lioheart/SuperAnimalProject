@@ -9,9 +9,9 @@ namespace SuperAnimal.ViewModels.Account
 {
     public class LoginViewModel
     {
-        [Required]
-        //[EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "This field is required")]
+        [Display(Name = "Email or username")]
+        public string EmailOrUserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

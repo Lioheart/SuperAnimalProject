@@ -10,6 +10,6 @@ namespace SuperAnimal.ViewModels.Profile
     {
         public string UserId { get; set; }
 
-        public IEnumerable<Pet> Pets { get; set; }
+        public IEnumerable<Models.Pet> Pets { get; set; }
     }
 }
