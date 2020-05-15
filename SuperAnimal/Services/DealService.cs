@@ -26,9 +26,13 @@ namespace SuperAnimal.Services
             var pet = Context.Pets.Include(x => x.User).FirstOrDefault(x => x.Id == petId);
             var ownerEmail = pet.User.Email;
 
+            var result = _emailService.SendDealEmail(user.Email, user.UserName, pet.User.Email, 
+                pet.User.UserName, pet.Name);
 
+            if(result.Success)
+                return ServiceResponse<bool>.Ok();
 
-            return ServiceResponse<bool>.Ok();
+            return ServiceResponse<bool>.Error();
         }
     }
 }
