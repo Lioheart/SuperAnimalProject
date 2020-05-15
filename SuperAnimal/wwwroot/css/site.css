@@ -73,3 +73,7 @@ body {
 .add-pet-btn{
     padding-top: 12px;
 }
+
+#btn-search-pet{
+    margin-left: 10px;
+}

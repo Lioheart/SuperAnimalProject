@@ -8,8 +8,6 @@ namespace SuperAnimal.ViewModels.Profile
 {
     public class ProfileIndexViewModel
     {
-        public string UserId { get; set; }
-
         public IEnumerable<Models.Pet> Pets { get; set; }
     }
 }

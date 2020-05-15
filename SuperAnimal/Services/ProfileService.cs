@@ -22,32 +22,38 @@ namespace SuperAnimal.Services
             UserManager = userManager;
         }
 
-        public ServiceResponse<ProfileIndexViewModel> GetProfileIndexViewModel(ClaimsPrincipal claimsPrincipal)
-        {
-            var userIdString = UserManager.GetUserId(claimsPrincipal);
 
+        protected ServiceResponse<T> HandleException<T>(Func<ServiceResponse<T>> method)
+        {
             try
             {
-                var pets = Context.Pets.Where(x => x.UserId == userIdString).ToList();
+                return method.Invoke();
+            }
+            catch (FormatException)
+            {
+                return ServiceResponse<T>.Error();
+            }
+            catch (OverflowException)
+            {
+                return ServiceResponse<T>.Error();
+            }
+        }
+
+        public ServiceResponse<ProfileIndexViewModel> GetProfileIndexViewModel(AppUser loggedUser)
+        {
+            ServiceResponse<ProfileIndexViewModel> method()
+            {
+                var pets = Context.Pets.Where(x => x.UserId == loggedUser.Id).ToList();
 
                 var model = new ProfileIndexViewModel
                 {
-                    UserId = userIdString,
                     Pets = pets
                 };
 
                 return ServiceResponse<ProfileIndexViewModel>.Ok(model);
             }
-            catch (FormatException)
-            {
-                return ServiceResponse<ProfileIndexViewModel>.Error();
-            }
-            catch (OverflowException)
-            {
-                return ServiceResponse<ProfileIndexViewModel>.Error();
-            }
 
-
+            return HandleException(method);
         }
     }
 }

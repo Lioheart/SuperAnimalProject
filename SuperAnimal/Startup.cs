@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperAnimal.Models;
 using SuperAnimal.Services;
+using SuperAnimal.Repositories.Interfaces;
+using SuperAnimal.Repositories;
 
 namespace SuperAnimal
 {
@@ -36,7 +38,7 @@ namespace SuperAnimal
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<AppUser, AppRole>(options => 
+            services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
@@ -46,6 +48,9 @@ namespace SuperAnimal
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //var debugAppSettings = Configuration.GetSection("DebugAppSettings").Get<DebugAppSettings>();
+            //services.AddSingleton<IDebugAppSettings>(debugAppSettings);
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -53,6 +58,9 @@ namespace SuperAnimal
             services.AddScoped<EmailService>();
             services.AddScoped<PetService>();
             services.AddScoped<ProfileService>();
+            services.AddScoped<DealService>();
+            services.AddScoped<IPetRepository, PetRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

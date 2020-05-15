@@ -28,7 +28,7 @@
                         <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
                     </div>
 
-                    <input asp-for="UserId" type="hidden" />
+                    <input asp-for="UserId" type="hidden" value="@Model.UserId" />
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">Add Pet </button>

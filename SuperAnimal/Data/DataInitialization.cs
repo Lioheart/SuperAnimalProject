@@ -25,7 +25,7 @@ namespace SuperAnimal.Data
 
         public void SeedUsers()
         {
-            if (Context.AspNetUsers.ToList().Count < 100)
+            if (Context.Users.ToList().Count < 100)
             {
                 var testUser = new AppUser
                 {
@@ -56,7 +56,7 @@ namespace SuperAnimal.Data
 
         public void SeedPets()
         {
-            var usersIds = Context.AspNetUsers.Select(x => x.Id).ToList();
+            var usersIds = Context.Users.Select(x => x.Id).ToList();
 
             if (Context.Pets.ToList().Count < 500)
             {

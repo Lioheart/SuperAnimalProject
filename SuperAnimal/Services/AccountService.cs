@@ -45,7 +45,7 @@ namespace SuperAnimal.Services
 
         public async Task<SignInResult> Login(LoginViewModel model)
         {
-            var user = Context.AspNetUsers.FirstOrDefault(x => x.UserName == model.EmailOrUserName || x.Email == model.EmailOrUserName);
+            var user = Context.Users.FirstOrDefault(x => x.UserName == model.EmailOrUserName || x.Email == model.EmailOrUserName);
             var checkResult = await SignInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (checkResult.Succeeded)

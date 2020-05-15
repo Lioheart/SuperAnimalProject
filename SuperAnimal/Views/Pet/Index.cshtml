@@ -1,7 +1,36 @@
-﻿
+﻿@model SuperAnimal.ViewModels.Pet.PetIndexViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @Model.Pet.Name;
 }
 
-<h1>Index</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1>@Model.Pet.Name</h1>
+        </div>
+        <div class="col-2">
+            @Html.ActionLink("Edit pet", "EditPet", "Pet", new { PetId = @Model.Pet.Id  }, new { @class = "text-decoration-none btn btn-info" })
+        </div>
+        <div class="col-2">
+            @Html.ActionLink("Delete pet", "DeletePet", "Pet", new { PetId = @Model.Pet.Id }, new { @class = "text-decoration-none btn btn-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h5>@Model.Pet.Genre</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p> @Model.Pet.Description </p>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <img src="@Model.Pet.ProfilePhoto" alt="@Model.Pet.Name" />
+        </div>
+    </div>
+</div>
+
 

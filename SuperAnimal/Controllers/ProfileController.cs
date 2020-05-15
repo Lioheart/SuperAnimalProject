@@ -6,22 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using SuperAnimal.ViewModels.Profile;
 using Microsoft.AspNetCore.Identity;
 using SuperAnimal.Services;
+using SuperAnimal.Models;
+using SuperAnimal.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SuperAnimal.Controllers
 {
-    public class ProfileController : Controller
+    [Authorize]
+    public class ProfileController : BaseController
     {
-        private readonly ProfileService ProfileService;
+        readonly ProfileService _profileService;
 
-        public ProfileController(ProfileService profileService)
+        public ProfileController(ProfileService profileService, UserManager<AppUser> userManager, IUserRepository userRepository)
+            : base(userManager, userRepository)
         {
-            ProfileService = profileService;
+            _profileService = profileService;
         }
 
         public IActionResult Index()
         {
-            var result = ProfileService.GetProfileIndexViewModel(HttpContext.User);
-
+            var result = _profileService.GetProfileIndexViewModel(GetLoggedUser());
+            
             return View(result.Data);
         }
     }

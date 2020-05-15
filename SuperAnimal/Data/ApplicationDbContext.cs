@@ -13,7 +13,6 @@ namespace SuperAnimal.Data
             : base(options)
         {
         }
-        public DbSet<AppUser> AspNetUsers { get; set; }
 
         public DbSet<Image> Images { get; set; }
 

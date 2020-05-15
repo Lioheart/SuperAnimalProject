@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SuperAnimal.Data;
 using SuperAnimal.Models;
@@ -24,7 +25,7 @@ namespace SuperAnimal.Services
 
         public ServiceResponse<Pet> CreateNewPet(AddPetViewModel model)
         {
-            var relativeFilePath = string.Empty;
+            string relativeFilePath;
             if (model.ProfilePhoto != null)
             {
                 CreateDirectoryForPetPhotosIfDoesntExist();
@@ -53,11 +54,35 @@ namespace SuperAnimal.Services
 
         private void CreateDirectoryForPetPhotosIfDoesntExist()
         {
-            var uploadsFolder = Path.Combine(WebHostEnvironment.WebRootPath, "images/Pets");
+            var uploadsFolder = Path.Combine(WebHostEnvironment.WebRootPath, "images\\Pets");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
+        }
+
+        public ServiceResponse<EditPetViewModel> GetEditPetViewModel(AppUser user, int petId)
+        {
+            var pet = Context.Pets.FirstOrDefault(p => p.Id == petId);
+
+            if (pet == null)
+                return ServiceResponse<EditPetViewModel>.Error();
+
+            if (user.Id == pet.UserId)
+                return ServiceResponse<EditPetViewModel>.Ok(new EditPetViewModel { Pet = pet });
+            else
+                return ServiceResponse<EditPetViewModel>.Error();
+
+        }
+
+        public ServiceResponse<Pet> EditPet(AppUser user, Pet pet)
+        {
+            if (user.Id != pet.UserId)
+                return ServiceResponse<Pet>.Error();
+
+            Context.Pets.Update(pet);
+            Context.SaveChanges();
+            return ServiceResponse<Pet>.Ok(pet);
         }
 
         private string GenerateFilePathForPetPhoto(string uniqueFileName)
@@ -76,6 +101,29 @@ namespace SuperAnimal.Services
         {
             using var fileStream = new FileStream(filePath, FileMode.Create);
             file.CopyTo(fileStream);
+        }
+
+        public ServiceResponse<PetIndexViewModel> GetPetIndexViewModelForPetId(AppUser loggedUser, int petId)
+        {
+            var pet = Context.Pets.Include(x => x.User).FirstOrDefault(x => x.Id == petId);
+
+            if (pet == null || pet.User.Id != loggedUser.Id)
+                return ServiceResponse<PetIndexViewModel>.Error();
+            else
+                return ServiceResponse<PetIndexViewModel>.Ok(new PetIndexViewModel { Pet = pet });
+        }
+
+        public ServiceResponse<bool> DeletePet(AppUser user, int petId)
+        {
+            var pet = Context.Pets.FirstOrDefault(x => x.Id == petId);
+            if (pet != null && pet.UserId == user.Id)
+            {
+                Context.Pets.Remove(pet);
+                Context.SaveChanges();
+                return ServiceResponse<bool>.Ok();
+            }
+            else
+                return ServiceResponse<bool>.Error();
         }
 
 
