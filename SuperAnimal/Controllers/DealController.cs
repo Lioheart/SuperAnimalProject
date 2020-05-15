@@ -38,13 +38,12 @@ namespace SuperAnimal.Controllers
 
         public IActionResult Deal(int petId)
         {
-            var result = _dealService.SendEmailDeal(GetLoggedUser);
+            var result = _dealService.SendEmailDeal(GetLoggedUser(), petId);
 
             if (result.Success)
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             else
                 return ErrorPage();
-
         }
     }
 }
