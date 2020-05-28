@@ -15,7 +15,7 @@ namespace SuperAnimal.Data
     {
         private readonly ApplicationDbContext Context;
         private readonly UserManager<AppUser> UserManager;
-        private const string PasswordForTestUsers = "Haslo12345!";
+        private const string PasswordForTestUsers = "Password12345!";
 
         public DataInitialization(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
