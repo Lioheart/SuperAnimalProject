@@ -24,6 +24,11 @@ namespace SuperAnimal.Data
 
         public DbSet<Sex> Sexs { get; set; }
 
+        public DbSet<Chat> Chats { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<AppUser>().Property(x => x.UserName).IsRequired();

@@ -47,7 +47,7 @@
                     <td>@pet.Name</td>
                     <td>@pet.User.UserName</td>
                     <td>
-                        @Html.ActionLink("Deal", "Deal", "Deal", new { PetId = @pet.Id }, new { @class = "text-decoration-none btn btn-info" })
+                        @Html.ActionLink("Deal", "Index", "DealChat", new { petId = @pet.Id }, new { @class = "text-decoration-none btn btn-info" })
                     </td>
                 </tr>
             }

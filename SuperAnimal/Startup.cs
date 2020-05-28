@@ -16,6 +16,7 @@ using SuperAnimal.Models;
 using SuperAnimal.Services;
 using SuperAnimal.Repositories.Interfaces;
 using SuperAnimal.Repositories;
+using SuperAnimal.Hubs;
 
 namespace SuperAnimal
 {
@@ -53,6 +54,7 @@ namespace SuperAnimal
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddScoped<AccountService>();
             services.AddScoped<EmailService>();
@@ -91,6 +93,8 @@ namespace SuperAnimal
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

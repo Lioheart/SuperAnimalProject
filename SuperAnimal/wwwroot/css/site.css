@@ -77,3 +77,8 @@ body {
 #btn-search-pet{
     margin-left: 10px;
 }
+
+.chatCloud {
+    max-width: 50%;
+    word-break: break-word;
+}
