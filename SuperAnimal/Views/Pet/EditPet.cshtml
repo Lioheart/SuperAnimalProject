@@ -1,0 +1,41 @@
+﻿@model SuperAnimal.ViewModels.Pet.EditPetViewModel
+@{
+    ViewData["Title"] = "EditPet";
+}
+
+<h1>EditPet</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <section>
+                <form enctype="multipart/form-data" asp-controller="Pet" asp-action="EditPet" method="post">
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Pet.Name"></label>
+                        <input asp-for="Pet.Name" class="form-control" value="@Model.Pet.Name" />
+                        <span asp-validation-for="Pet.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pet.Description"></label>
+                        <input asp-for="Pet.Description" class="form-control" value="@Model.Pet.Description" />
+                        <span asp-validation-for="Pet.Description" class="text-danger"></span>
+                    </div>
+
+
+                    <input asp-for="Pet.Id" type="hidden" value="@Model.Pet.Id" />
+                    <input asp-for="Pet.UserId" type="hidden" value="@Model.Pet.UserId" />
+                    <input asp-for="Pet.ProfilePhoto" type="hidden" value="@Model.Pet.ProfilePhoto" />
+                    <input asp-for="Pet.Genre" type="hidden" value="@Model.Pet.Genre" />
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Edit Pet </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+

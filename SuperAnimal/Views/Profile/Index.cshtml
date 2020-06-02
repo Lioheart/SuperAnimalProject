@@ -1,0 +1,31 @@
+﻿@model SuperAnimal.ViewModels.Profile.ProfileIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row mb-5">
+    <h1>My pets</h1>
+    @Html.ActionLink("Add Pet +", "AddPet", "Pet", new { }, new { @class = "text-decoration-none btn btn-success ml-3 add-pet-btn" })
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var pet in Model.Pets)
+        {
+            <div class="col-3 mt-4">
+                <a asp-controller="Pet" asp-action="Index" asp-route-petId="@pet.Id" class="text-decoration-none">
+                    <div class="card">
+                        <img class="card-img-top" src="@pet.ProfilePhoto" alt="@pet.Name">
+                        <h5 class="card-title">@pet.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@pet.Genre</h6>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+

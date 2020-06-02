@@ -1,0 +1,17 @@
+﻿@model SuperAnimal.ViewModels.Home.CovidViewModel
+@{
+    ViewData["Title"] = "Covid";
+}
+
+<h1>Covid</h1>
+
+<h3 id="h-confirmed">Confirmed: @Model.Confirmed</h3>
+<h3 id="h-recovered">Recovered: @Model.Recovered</h3>
+<h3 id="h-critical">Critical: @Model.Critical</h3>
+<h3 id="h-deaths">Deaths: @Model.Deaths</h3>
+<h3 id="h-last-change">Last Change: @Model.LastChange</h3>
+<h3 id="h-last-update">Last Update: @Model.LastUpdate</h3>
+
+<br />
+
+<button class="btn-info" onclick="getResponseCovidJSON()">Refresh</button>
